@@ -160,7 +160,7 @@ button { font: inherit; color: inherit; }
 .about__text p { max-width: 36em; margin: 0 0 1em; color: var(--ink-2); }
 .about__text .lead { color: var(--ink); }
 .quote {
-  margin: 0; padding: 36px 34px 30px; position: relative;
+  margin: 0; padding: 36px 40px 34px; position: relative;
   background: var(--lapis); color: var(--on-dark);
   border-radius: 200px 200px 14px 14px; /* силуэт киота / окна храма */
   padding-top: 110px;
@@ -223,7 +223,7 @@ button { font: inherit; color: inherit; }
 .row__title { font: 400 var(--step-2)/1.1 var(--serif); }
 .row__title small { display: block; font: italic 400 var(--step-0)/1.3 var(--serif); color: var(--ink-2); margin-top: 4px; }
 .row__when { font-size: var(--step--1); color: var(--ink-2); line-height: 1.45; }
-.row__age { font-size: var(--step--1); justify-self: start; padding: 4px 10px; border-radius: 999px; border: 1px solid #17191f2e; white-space: nowrap; }
+.row__age { font-size: var(--step--1); justify-self: start; padding: 6px 12px; border-radius: 999px; border: 1px solid #17191f2e; white-space: nowrap; }
 .row__plus { width: 28px; height: 28px; position: relative; }
 .row__plus::before, .row__plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; background: var(--ink); translate: -50% -50%; transition: rotate .35s var(--ease); }
 .row__plus::after { rotate: 90deg; }
@@ -259,7 +259,7 @@ button { font: inherit; color: inherit; }
 .day__name { font: 400 var(--step-1)/1 var(--serif); padding-bottom: 12px; border-bottom: 1px solid #c9a24a55; margin-bottom: 10px; color: var(--gold-hi); }
 .day__name small { display: block; font: 400 .74rem var(--sans); color: var(--on-dark-2); margin-top: 6px; }
 .slot {
-  display: block; width: 100%; margin-bottom: 6px; padding: 9px 10px 10px;
+  display: block; width: 100%; margin-bottom: 6px; padding: 11px 12px 12px;
   text-align: left; cursor: pointer;
   background: #ffffff0a; border: 0; border-left: 3px solid var(--c); border-radius: 4px 8px 8px 4px;
   color: var(--on-dark);

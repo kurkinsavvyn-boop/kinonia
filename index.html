@@ -3,15 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Кинония — занятия при Троицком храме на Сходне</title>
+<title>Кинония — кружки и студии при Троицком храме на Сходне</title>
 <meta name="description" content="Духовно-просветительский центр «Кинония» при храме Живоначальной Троицы на Сходне: 18 кружков и студий для детей и взрослых. Расписание и запись онлайн.">
 <meta property="og:title" content="Кинония — кружки и студии на Сходне">
-<meta property="og:description" content="Иконопись, резьба, изостудия, шахматы, языки, танец и ещё 12 занятий для детей и взрослых. Запись онлайн.">
-<meta name="theme-color" content="#13203A">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2313203A'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23C9A24A' stroke-width='3'/%3E%3Ctext x='32' y='42' font-family='Georgia' font-size='28' text-anchor='middle' fill='%23E3C98A'%3EК%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<meta property="og:description" content="Иконопись, резьба, изостудия, шахматы, языки и ещё 13 занятий для детей и взрослых. Запись онлайн.">
+<meta property="og:image" content="https://static.tildacdn.com/tild6534-3261-4866-a431-323131633238/DzECFIddaro.jpg">
+<meta name="theme-color" content="#A12F2F">
+<link rel="icon" href="img/favicon.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,110 +17,82 @@
 <a class="skip" href="#catalog">К занятиям</a>
 
 <header class="bar" id="bar">
-  <a class="bar__mark" href="#top" aria-label="Кинония, в начало">
-    <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5"/><circle cx="20" cy="20" r="12.5"/><path d="M20 9v22M13.5 16h13"/></svg>
+  <a class="bar__logo" href="#top" aria-label="Кинония, в начало">
+    <img src="img/logo.webp" alt="" width="44" height="44">
     <span>Кинония</span>
   </a>
   <nav class="bar__nav" aria-label="Разделы">
     <a href="#about">О центре</a>
     <a href="#catalog">Занятия</a>
-    <a href="#week">Неделя</a>
-    <a href="#visit">Как добраться</a>
+    <a href="#week">Расписание</a>
+    <a href="#visit">Контакты</a>
+    <a href="http://shodnyahramnew.ru/" target="_blank" rel="noopener">Сайт храма</a>
   </nav>
   <button class="btn btn--gold btn--sm" data-signup>Записаться</button>
 </header>
 
 <main id="top">
 
-  <!-- HERO: кольцо из названий занятий вокруг слова -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero__ring" aria-hidden="true">
-      <svg viewBox="0 0 1000 1000" class="ring">
-        <defs>
-          <path id="ringPath" d="M500,500 m-410,0 a410,410 0 1,1 820,0 a410,410 0 1,1 -820,0"/>
-          <path id="ringPathIn" d="M500,500 m-338,0 a338,338 0 1,1 676,0 a338,338 0 1,1 -676,0"/>
-        </defs>
-        <circle class="ring__line" cx="500" cy="500" r="455"/>
-        <circle class="ring__line ring__line--thin" cx="500" cy="500" r="372"/>
-        <circle class="ring__line ring__line--thin" cx="500" cy="500" r="300"/>
-        <g class="ring__spin">
-          <text class="ring__text"><textPath href="#ringPath" id="ringText"></textPath></text>
-        </g>
-        <g class="ring__spin ring__spin--rev">
-          <text class="ring__greek"><textPath href="#ringPathIn">κοινωνία · κοινωνία · κοινωνία · κοινωνία · κοινωνία · κοινωνία · κοινωνία · κοινωνία · κοινωνία · κοινωνία ·</textPath></text>
-        </g>
-        <g class="ring__dots" id="ringDots"></g>
-      </svg>
-    </div>
-
+    <img class="hero__bg" src="img/hero.jpg" alt="Здание центра «Кинония» на территории Троицкого храма" fetchpriority="high">
     <div class="hero__body">
-      <p class="hero__kicker">Духовно-просветительский центр при храме Живоначальной Троицы на Сходне</p>
-      <h1 class="hero__title" id="hero-title" aria-label="Кинония"><span class="split">Кинония</span></h1>
-      <p class="hero__gloss"><em>κοινωνία</em> — по-гречески «общение, общее дело»</p>
-      <p class="hero__lead">Восемнадцать занятий для детей и взрослых: от иконописи и резьбы по дереву до шахмат, греческого и семейных классов. Рядом с храмом, в пяти минутах от станции.</p>
+      <p class="hero__pre">Духовно-просветительский центр</p>
+      <h1 class="hero__title" id="hero-title">Кинония</h1>
+      <p class="hero__gloss">от греч. κοινωνία — сообщество, связь, общее дело</p>
+      <p class="hero__lead">18 кружков и студий для детей и взрослых при храме Живоначальной Троицы на Сходне</p>
       <div class="hero__cta">
-        <a class="btn btn--gold" href="#catalog">Выбрать занятие</a>
-        <a class="btn btn--ghost" href="#week">Расписание недели</a>
+        <a class="btn btn--white" href="#catalog">Выбрать занятие</a>
+        <button class="btn btn--line" data-signup>Записаться</button>
       </div>
     </div>
-
-    <a class="hero__scroll" href="#about" aria-label="Прокрутить к описанию центра"><span></span></a>
   </section>
 
-  <!-- О ЦЕНТРЕ -->
   <section class="about" id="about" aria-labelledby="about-title">
     <div class="wrap about__grid">
       <div class="about__text">
-        <h2 class="h2" id="about-title">Мост между храмом<br>и современным человеком</h2>
-        <p class="lead">«Кинония» работает с сентября 2018 года в храмовом комплексе на Первомайской улице. Здесь учатся, творят и просто встречаются люди всех возрастов: дети после школы, родители на семейном обучении, взрослые, которые давно хотели взять в руки резец или кисть.</p>
-        <p>Мы некоммерческий центр, занятия проходят за пожертвование. Многодетным семьям и семьям участников СВО предлагаем индивидуальные условия. Кроме кружков у нас есть воскресная школа, библиотека, лекции, концерты, ярмарки и праздники по церковному календарю.</p>
+        <h2 class="h2" id="about-title">Мост между храмом и&nbsp;современным человеком</h2>
+        <p class="about__mission">Через образование, культуру и живое общение мы раскрываем Церковь как живое, дышащее пространство любви, смысла и духовного роста.</p>
+        <p>«Кинония» работает с 2018 года в храмовом комплексе на Первомайской улице. Это место общения людей всех возрастов: здесь учатся, творят, делятся опытом и просто отдыхают душой в дружественной атмосфере.</p>
+        <p>Мы некоммерческий центр, все занятия проходят за пожертвование. Многодетным семьям и семьям участников СВО предлагаем индивидуальные условия.</p>
       </div>
-      <figure class="quote">
-        <blockquote>«Кинония — это одно из имён Церкви. Церковь есть сообщество, в котором происходит взаимообщение верующих с Богом и друг с другом — в Боге».</blockquote>
-        <figcaption>Митрополит Филарет (Вахромеев)</figcaption>
+      <figure class="about__photo">
+        <img src="img/about.jpg" alt="Ученики иконописной мастерской с работами у входа в центр" loading="lazy">
       </figure>
     </div>
-
-    <div class="wrap facts">
-      <div class="fact"><b>1910</b><span>год постройки храма по проекту Ф. Ф. Воскресенского</span></div>
-      <div class="fact"><b>2018</b><span>центр открыл свои двери</span></div>
-      <div class="fact"><b>5 залов</b><span>от уютного малого класса до актового зала на 110 человек</span></div>
-      <div class="fact"><b>25 минут</b><span>на «Ласточке» от Ленинградского вокзала до станции Сходня</span></div>
-    </div>
+    <figure class="wrap quote">
+      <blockquote>«Кинония — это одно из имён Церкви. Церковь есть сообщество, в котором происходит взаимообщение верующих с Богом и друг с другом — в Боге».</blockquote>
+      <figcaption>Митрополит Филарет (Вахромеев)</figcaption>
+    </figure>
   </section>
 
-  <!-- ПИГМЕНТЫ / НАПРАВЛЕНИЯ + КАТАЛОГ -->
   <section class="catalog" id="catalog" aria-labelledby="catalog-title">
     <div class="wrap">
-      <div class="catalog__head">
-        <h2 class="h2" id="catalog-title">Занятия</h2>
-        <p class="catalog__note">Цвет каждого направления назван по пигменту, которым пишут иконы в нашей мастерской. Нажмите на занятие, чтобы увидеть подробности и записаться.</p>
-      </div>
+      <h2 class="h2 h2--center" id="catalog-title">Занятия 2025–2026</h2>
+      <p class="catalog__lead">Выбирайте для души и разума, для всей семьи. Нажмите на карточку, чтобы прочитать подробнее и записаться.</p>
 
       <div class="filters" role="group" aria-label="Фильтры">
         <div class="filters__row" id="fWho" role="radiogroup" aria-label="Для кого">
-          <button class="chip is-on" data-who="any" role="radio" aria-checked="true">Все</button>
+          <button class="chip is-on" data-who="any" role="radio" aria-checked="true">Для всех</button>
           <button class="chip" data-who="kids" role="radio" aria-checked="false">Детям</button>
           <button class="chip" data-who="adults" role="radio" aria-checked="false">Взрослым</button>
         </div>
         <div class="filters__row" id="fCat" aria-label="Направление"></div>
-        <div class="filters__row filters__row--days" id="fDay" role="radiogroup" aria-label="День недели"></div>
+        <div class="filters__row" id="fDay" role="radiogroup" aria-label="День недели"></div>
       </div>
 
       <p class="catalog__count" id="count" aria-live="polite"></p>
-      <ol class="list" id="list"></ol>
+      <ul class="cards" id="cards"></ul>
       <div class="empty" id="empty" hidden>
-        <p>Под эти условия занятий нет. Попробуйте другой день или сбросьте фильтры.</p>
-        <button class="btn btn--ink btn--sm" id="reset">Сбросить фильтры</button>
+        <p>Под эти условия занятий нет. Выберите другой день или сбросьте фильтры.</p>
+        <button class="btn btn--red btn--sm" id="reset">Сбросить фильтры</button>
       </div>
     </div>
   </section>
 
-  <!-- НЕДЕЛЯ -->
   <section class="week" id="week" aria-labelledby="week-title">
     <div class="wrap">
-      <h2 class="h2" id="week-title">Неделя в «Кинонии»</h2>
-      <p class="week__note">Наведите на занятие, и подсветятся все его дни. Нажмите, чтобы записаться.</p>
+      <h2 class="h2 h2--center" id="week-title">Расписание на неделю</h2>
+      <p class="catalog__lead">Наведите на занятие, чтобы увидеть все его дни. Нажмите, чтобы открыть подробности.</p>
       <div class="grid" id="grid"></div>
       <div class="flex">
         <h3>По договорённости с педагогом</h3>
@@ -131,32 +101,30 @@
     </div>
   </section>
 
-  <!-- КАК ЗАПИСАТЬСЯ -->
   <section class="steps" aria-labelledby="steps-title">
     <div class="wrap">
-      <h2 class="h2" id="steps-title">Как проходит запись</h2>
+      <h2 class="h2 h2--center" id="steps-title">Как записаться</h2>
       <ol class="steps__list">
-        <li><b>Выберите занятие</b><span>В каталоге или в расписании недели. Если сомневаетесь, напишите в комментарии, что ищете, и мы подскажем.</span></li>
+        <li><b>Выберите занятие</b><span>В каталоге или в расписании. Если сомневаетесь, отметьте «Помогите выбрать» — подскажем.</span></li>
         <li><b>Оставьте заявку</b><span>Имя, телефон и возраст ученика. Это займёт минуту.</span></li>
         <li><b>Мы перезвоним</b><span>Администратор свяжется с вами в течение рабочего дня и пригласит на первое занятие.</span></li>
       </ol>
       <div class="steps__cta">
         <button class="btn btn--gold" data-signup>Оставить заявку</button>
-        <a class="btn btn--ghost-ink" id="botLink" href="#" hidden target="_blank" rel="noopener">Записаться через Telegram</a>
+        <a class="btn btn--outline" id="botLink" href="#" hidden target="_blank" rel="noopener">Записаться через Telegram</a>
       </div>
     </div>
   </section>
 
-  <!-- КАК ДОБРАТЬСЯ -->
   <section class="visit" id="visit" aria-labelledby="visit-title">
     <div class="wrap visit__grid">
       <div>
-        <h2 class="h2" id="visit-title">Ждём в гости</h2>
+        <h2 class="h2" id="visit-title">Будем рады познакомиться</h2>
         <address class="visit__addr" id="addr"></address>
         <dl class="visit__dl">
           <dt>Администратор центра</dt><dd id="admin"></dd>
           <dt>Часы работы</dt><dd id="hours"></dd>
-          <dt>Дорога</dt><dd>От станции Сходня (МЦД-3) пять минут пешком. На территории есть парковка.</dd>
+          <dt>Как добраться</dt><dd>На «Ласточке» от Ленинградского вокзала до станции Сходня около 30 минут, от станции до нас 5 минут пешком. На территории есть парковка.</dd>
         </dl>
         <div class="visit__links" id="links"></div>
       </div>
@@ -170,12 +138,31 @@
 
 <footer class="foot">
   <div class="wrap foot__in">
-    <p>Духовно-просветительский центр «Кинония» при храме Живоначальной Троицы на Сходне. Сергиево-Посадская епархия.</p>
-    <p><a href="http://shodnyahramnew.ru/" target="_blank" rel="noopener">Сайт храма</a> <a href="https://t.me/shodnyahram" target="_blank" rel="noopener">Telegram-канал</a> <a href="https://vk.com/shodnyahram" target="_blank" rel="noopener">ВКонтакте</a></p>
+    <div class="foot__brand">
+      <img src="img/logo.webp" alt="" width="48" height="48" loading="lazy">
+      <p><span class="foot__name">Храм Троицы Живоначальной на Сходне</span>Духовно-просветительский центр «Кинония». Сергиево-Посадская епархия.</p>
+    </div>
+    <p class="foot__links">
+      <a href="http://shodnyahramnew.ru/" target="_blank" rel="noopener">Сайт храма</a>
+      <a href="https://t.me/shodnyahram" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://vk.com/shodnyahram" target="_blank" rel="noopener">ВКонтакте</a>
+      <a href="tel:+74955740680">8 (495) 574-06-80</a>
+    </p>
   </div>
 </footer>
 
-<!-- ФОРМА ЗАПИСИ -->
+<!-- Подробности о занятии -->
+<div class="sheet" id="info" hidden>
+  <div class="sheet__veil" data-close></div>
+  <div class="sheet__panel sheet__panel--info" role="dialog" aria-modal="true" aria-labelledby="info-title">
+    <button class="sheet__x" data-close aria-label="Закрыть">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+    <div id="infoBody"></div>
+  </div>
+</div>
+
+<!-- Форма записи -->
 <div class="sheet" id="sheet" hidden>
   <div class="sheet__veil" data-close></div>
   <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
@@ -248,20 +235,19 @@
 
     <div class="done" id="done" hidden>
       <svg class="done__mark" viewBox="0 0 120 120" aria-hidden="true">
-        <circle cx="60" cy="60" r="54"/><circle cx="60" cy="60" r="40"/>
-        <path d="M42 61l12 12 25-27"/>
+        <circle cx="60" cy="60" r="54"/>
+        <path d="M40 61l13 13 27-29"/>
       </svg>
       <h2 class="form__title">Заявка отправлена</h2>
       <p class="form__sub" id="doneText"></p>
       <a class="btn btn--gold btn--wide" id="doneBot" hidden target="_blank" rel="noopener">Получать уведомления в Telegram</a>
-      <button class="btn btn--ghost-ink btn--wide" data-close>Вернуться к занятиям</button>
+      <button class="btn btn--outline btn--wide" data-close>Вернуться к занятиям</button>
     </div>
   </div>
 </div>
 
 <script src="js/config.js"></script>
 <script src="js/clubs.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

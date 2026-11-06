@@ -7,16 +7,17 @@
   price: рекомендуемое пожертвование (оставьте "" если не указано)
 */
 window.KINONIA_CATEGORIES = {
-  craft:  { name: "Ремёсла",          pigment: "Охра",          color: "#C8902F" },
-  art:    { name: "Искусство",        pigment: "Киноварь",      color: "#C4462C" },
-  mind:   { name: "Языки и мышление", pigment: "Лазурь",        color: "#4F74C4" },
-  family: { name: "Семья и учёба",    pigment: "Ярь-медянка",   color: "#3E8C74" },
-  soul:   { name: "Беседа и помощь",  pigment: "Багрец",        color: "#9A4A6E" }
+  craft:  { name: "Ремёсла",          pigment: "Охра",          color: "#AD731D" },
+  art:    { name: "Искусство",        pigment: "Киноварь",      color: "#A12F2F" },
+  mind:   { name: "Языки и мышление", pigment: "Лазурь",        color: "#34558B" },
+  family: { name: "Семья и учёба",    pigment: "Ярь-медянка",   color: "#2F6B5A" },
+  soul:   { name: "Беседа и помощь",  pigment: "Багрец",        color: "#7A3B55" }
 };
 
 window.KINONIA_CLUBS = [
   {
     id: "izo",
+    photo: "img/izo.jpg",
     title: "Изостудия",
     name: "Юный художник",
     cat: "art", who: "kids", age: "4–16 лет",
@@ -32,6 +33,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "pyro",
+    photo: "img/pyro.jpg",
     title: "Выжигание по дереву",
     name: "Пирография",
     cat: "craft", who: "kids", age: "дети",
@@ -47,6 +49,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "tatyanka",
+    photo: "img/tatyanka.jpg",
     title: "Художественная резьба по дереву",
     name: "Татьянка",
     cat: "craft", who: "all", age: "10+ и взрослые",
@@ -62,6 +65,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "dance",
+    photo: "img/dance.jpg",
     title: "Студия исторического танца",
     name: "Свет",
     cat: "art", who: "all", age: "все возрасты",
@@ -74,6 +78,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "eng",
+    photo: "img/eng.jpg",
     title: "Английский и корейский язык",
     name: "",
     cat: "mind", who: "all", age: "0+",
@@ -89,6 +94,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "crochet",
+    photo: "img/crochet.jpg",
     title: "Вязание крючком",
     name: "Волшебные петельки",
     cat: "craft", who: "kids", age: "с 5 лет",
@@ -104,6 +110,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "icon",
+    photo: "img/icon.jpg",
     title: "Иконописная мастерская",
     name: "Под кровом",
     cat: "art", who: "adults", age: "14+",
@@ -119,6 +126,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "chess",
+    photo: "img/chess.jpg",
     title: "Шахматы",
     name: "",
     cat: "mind", who: "all", age: "6+",
@@ -131,6 +139,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "greek",
+    photo: "img/greek.webp",
     title: "Греческий язык",
     name: "",
     cat: "mind", who: "all", age: "10+ и взрослые",
@@ -144,6 +153,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "psy",
+    photo: "img/psy.jpg",
     title: "Психологические консультации",
     name: "",
     cat: "soul", who: "adults", age: "16+",
@@ -157,6 +167,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "cinema",
+    photo: "img/cinema.jpg",
     title: "Психологический киноклуб",
     name: "",
     cat: "soul", who: "adults", age: "16+",
@@ -170,6 +181,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "guitar",
+    photo: "img/guitar.jpg",
     title: "Гитара",
     name: "",
     cat: "art", who: "all", age: "7+",
@@ -185,6 +197,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "writing",
+    photo: "img/writing.jpg",
     title: "Писательская мастерская",
     name: "Черновик",
     cat: "art", who: "all", age: "подростки и взрослые",
@@ -197,6 +210,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "sew-kids",
+    photo: "img/sew-kids.jpg",
     title: "Швейная мастерская для детей",
     name: "Нитка за ниткой",
     cat: "craft", who: "kids", age: "5+",
@@ -209,6 +223,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "sew-adults",
+    photo: "img/sew-adults.jpg",
     title: "Курсы кройки и шитья",
     name: "",
     cat: "craft", who: "adults", age: "взрослые",
@@ -221,6 +236,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "logoped",
+    photo: "img/logoped.jpg",
     title: "Логопед-дефектолог",
     name: "",
     cat: "family", who: "kids", age: "от 1,5 лет",
@@ -234,6 +250,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "family-classes",
+    photo: "img/family-classes.jpg",
     title: "Семейные классы",
     name: "",
     cat: "family", who: "kids", age: "1–5 класс",
@@ -246,6 +263,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "classical",
+    photo: "img/classical.jpg",
     title: "Классические беседы",
     name: "",
     cat: "family", who: "kids", age: "4–11 лет",

@@ -16,6 +16,13 @@
 
   function fullTitle(c) { return c.name ? c.title + " «" + c.name + "»" : c.title; }
   function timeRange(s) { return s.to ? s.from + "–" + s.to : s.from; }
+  function plural(n, f) { var m = n % 10, h = n % 100; return f[m === 1 && h !== 11 ? 0 : m >= 2 && m <= 4 && (h < 10 || h >= 20) ? 1 : 2]; }
+  // уменьшенная копия фото с CDN Тильды
+  function thumb(url, w) {
+    if (!url) return "";
+    var m = url.match(/^https:\/\/static\.tildacdn\.com\/(tild[^/]+)\/(.+)$/);
+    return m ? "https://thb.tildacdn.com/" + m[1] + "/-/resize/" + w + "x/" + m[2] : url;
+  }
   function whenText(c) {
     if (!c.slots.length) return c.flex;
     if (c.id === "family-classes") return "Пн–Пт, учебный день";
@@ -29,51 +36,9 @@
     return out.join("; ");
   }
 
-  /* ---------- Hero: кольцо и буквы ---------- */
-  var ringText = $("#ringText");
-  var names = CLUBS.map(function (c) { return c.name || c.title; });
-  ringText.textContent = names.join("  ✦  ") + "  ✦  ";
-  // подгоняем кегль, чтобы названия ровно обошли круг и не наползали друг на друга
-  var ringEl = $(".ring__text"), circ = 2 * Math.PI * 410;
-  try {
-    var len = ringText.getComputedTextLength();
-    if (len > 0) ringEl.style.fontSize = Math.min(25, 25 * (circ * .985) / len) + "px";
-  } catch (e) {}
-  // точки-пигменты на внешнем круге
-  var dots = $("#ringDots");
-  Object.keys(CATS).forEach(function (k, i, arr) {
-    var a = (i / arr.length) * Math.PI * 2 - Math.PI / 2;
-    var el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    el.setAttribute("cx", 500 + Math.cos(a) * 455);
-    el.setAttribute("cy", 500 + Math.sin(a) * 455);
-    el.setAttribute("r", 7);
-    el.style.fill = CATS[k].color;
-    dots.appendChild(el);
-  });
-
-  var title = $(".split");
-  title.innerHTML = title.textContent.split("").map(function (ch) { return '<span class="ch" aria-hidden="true">' + ch + "</span>"; }).join("");
-
-  if (window.gsap && !reduce) {
-    var tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-    var lines = $$(".ring__line");
-    lines.forEach(function (l) { var r = +l.getAttribute("r"); var len = 2 * Math.PI * r; l.style.strokeDasharray = len; l.style.strokeDashoffset = len; });
-    tl.to(lines, { strokeDashoffset: 0, duration: 2.4, stagger: .18, ease: "power2.inOut" }, 0)
-      .from(".ring__text, .ring__greek", { opacity: 0, duration: 2 }, .9)
-      .from(".ring__dots circle", { scale: 0, transformOrigin: "center", duration: 1, stagger: .08, ease: "back.out(3)" }, 1.4)
-      .from(".split .ch", { yPercent: 110, opacity: 0, rotate: 6, duration: 1.4, stagger: .06 }, .35)
-      .from(".hero__kicker, .hero__gloss, .hero__lead, .hero__cta, .hero__scroll", { y: 18, opacity: 0, duration: 1.2, stagger: .1 }, 1)
-      .from(".bar", { y: -20, opacity: 0, duration: 1 }, 1.4);
-    // лёгкий параллакс кольца за курсором
-    var ring = $(".hero__ring");
-    window.addEventListener("pointermove", function (e) {
-      var x = (e.clientX / innerWidth - .5) * 18, y = (e.clientY / innerHeight - .5) * 18;
-      gsap.to(ring, { x: x, y: y, duration: 1.6, ease: "power3.out", overwrite: "auto" });
-    }, { passive: true });
-  }
-
+  /* ---------- Шапка ---------- */
   var bar = $("#bar");
-  var onScroll = function () { bar.classList.toggle("is-solid", scrollY > innerHeight * .6); };
+  var onScroll = function () { bar.classList.toggle("is-solid", scrollY > innerHeight * .7); };
   addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
   /* ---------- Фильтры ---------- */
@@ -81,7 +46,7 @@
   var fCat = $("#fCat");
   fCat.innerHTML = '<button class="chip is-on" data-cat="any">Все направления</button>' +
     Object.keys(CATS).map(function (k) {
-      return '<button class="chip" data-cat="' + k + '" style="--c:' + CATS[k].color + '" title="' + CATS[k].pigment + '"><i></i>' + CATS[k].name + "</button>";
+      return '<button class="chip" data-cat="' + k + '" style="--c:' + CATS[k].color + '"><i></i>' + CATS[k].name + "</button>";
     }).join("");
   var fDay = $("#fDay");
   fDay.innerHTML = '<button class="chip is-on" data-day="0">Любой день</button>' +
@@ -113,51 +78,35 @@
     return true;
   }
 
-  /* ---------- Каталог ---------- */
-  var list = $("#list");
-  list.innerHTML = CLUBS.map(function (c) {
+  /* ---------- Карточки ---------- */
+  var cards = $("#cards");
+  cards.innerHTML = CLUBS.map(function (c) {
     var cat = CATS[c.cat];
-    return '<li class="row" data-id="' + c.id + '" style="--c:' + cat.color + '">' +
-      '<button class="row__head" aria-expanded="false" aria-controls="d-' + c.id + '">' +
-        '<span class="dab" title="' + cat.pigment + ' — ' + cat.name + '"></span>' +
-        '<span class="row__title">' + esc(c.title) + (c.name ? "<small>«" + esc(c.name) + "»</small>" : "") + "</span>" +
-        '<span class="row__when">' + esc(whenText(c)) + "</span>" +
-        '<span class="row__age">' + esc(c.age) + "</span>" +
-        '<span class="row__plus" aria-hidden="true"></span>' +
-      "</button>" +
-      '<div class="row__body" id="d-' + c.id + '"><div class="row__inner"><div class="detail">' +
-        '<p class="detail__desc">' + esc(c.desc) + "</p>" +
-        '<div class="detail__side"><dl>' +
-          "<div><dt>Ведёт</dt><dd>" + esc(c.teacher) + (c.teacherNote ? '<br><span style="color:var(--ink-2)">' + esc(c.teacherNote) + "</span>" : "") + "</dd></div>" +
-          "<div><dt>Расписание</dt><dd>" + esc(whenText(c)) + "</dd></div>" +
-          "<div><dt>Пожертвование</dt><dd>" + esc(c.price || "уточните у администратора") + "</dd></div>" +
-        "</dl>" +
-        '<div class="detail__act"><button class="btn btn--ink btn--sm" data-signup="' + c.id + '">Записаться</button>' +
-          (c.phone ? '<a class="btn btn--ghost-ink btn--sm" href="tel:' + c.phone.replace(/[^\d+]/g, "") + '">Позвонить педагогу</a>' : "") +
-        "</div></div>" +
-      "</div></div></div></li>";
+    return '<li class="card" data-id="' + c.id + '" style="--c:' + cat.color + '">' +
+      '<button class="card__btn" data-info="' + c.id + '">' +
+        '<span class="card__img"><img src="' + thumb(c.photo, 640) + '" alt="" loading="lazy"><span class="card__age">' + esc(c.age) + "</span></span>" +
+        '<span class="card__body">' +
+          '<span class="card__cat">' + esc(cat.name) + "</span>" +
+          '<span class="card__title">' + esc(c.title) + "</span>" +
+          (c.name ? '<span class="card__name">«' + esc(c.name) + "»</span>" : "") +
+          '<span class="card__when">' + esc(whenText(c)) + "</span>" +
+          '<span class="card__more">Подробнее и запись</span>' +
+        "</span>" +
+      "</button></li>";
   }).join("");
-
-  list.addEventListener("click", function (e) {
-    var h = e.target.closest(".row__head"); if (!h) return;
-    var row = h.parentNode, open = !row.classList.contains("is-open");
-    row.classList.toggle("is-open", open);
-    h.setAttribute("aria-expanded", open);
-  });
 
   function render() {
     var n = 0;
-    $$(".row", list).forEach(function (row) {
-      var ok = matches(byId[row.dataset.id]);
+    $$(".card", cards).forEach(function (el) {
+      var ok = matches(byId[el.dataset.id]);
       if (ok) {
         n++;
-        if (row.hidden) { row.hidden = false; row.classList.add("is-out"); requestAnimationFrame(function () { requestAnimationFrame(function () { row.classList.remove("is-out"); }); }); }
-      } else { row.hidden = true; row.classList.remove("is-open"); }
+        if (el.hidden) { el.hidden = false; el.classList.add("is-out"); requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.remove("is-out"); }); }); }
+      } else el.hidden = true;
     });
     $("#count").textContent = n === CLUBS.length ? "Все " + n + " занятий" : "Подходит: " + n + " " + plural(n, ["занятие", "занятия", "занятий"]);
     $("#empty").hidden = n > 0;
   }
-  function plural(n, f) { var m = n % 10, h = n % 100; return f[m === 1 && h !== 11 ? 0 : m >= 2 && m <= 4 && (h < 10 || h >= 20) ? 1 : 2]; }
   render();
 
   /* ---------- Неделя ---------- */
@@ -169,21 +118,19 @@
     items.sort(function (a, b) { return a.s.from < b.s.from ? -1 : 1; });
     html += '<div class="day"><div class="day__name">' + DAYS[d] + "<small>" + items.length + " " + plural(items.length, ["занятие", "занятия", "занятий"]) + "</small></div>" +
       items.map(function (it) {
-        return '<button class="slot" data-club="' + it.c.id + '" style="--c:' + CATS[it.c.cat].color + '"><b>' + timeRange(it.s) + "</b><span>" + esc(it.c.name || it.c.title) + (it.s.note ? " · " + esc(it.s.note) : "") + "</span></button>";
+        return '<button class="slot" data-info="' + it.c.id + '" style="--c:' + CATS[it.c.cat].color + '"><b>' + timeRange(it.s) + "</b><span>" + esc(it.c.name || it.c.title) + (it.s.note ? " · " + esc(it.s.note) : "") + "</span></button>";
       }).join("") + "</div>";
   }
   grid.innerHTML = html;
   grid.addEventListener("pointerover", function (e) {
-    var s = e.target.closest(".slot");
-    if (!s) return;
+    var s = e.target.closest(".slot"); if (!s) return;
     grid.classList.add("is-hl");
-    $$(".slot", grid).forEach(function (x) { x.classList.toggle("is-hl", x.dataset.club === s.dataset.club); });
+    $$(".slot", grid).forEach(function (x) { x.classList.toggle("is-hl", x.dataset.info === s.dataset.info); });
   });
   grid.addEventListener("pointerleave", function () { grid.classList.remove("is-hl"); });
-  grid.addEventListener("click", function (e) { var s = e.target.closest(".slot"); if (s) openSheet(s.dataset.club); });
 
   $("#flexList").innerHTML = CLUBS.filter(function (c) { return !c.slots.length; }).map(function (c) {
-    return '<li><button data-signup="' + c.id + '" style="--c:' + CATS[c.cat].color + '"><i></i>' + esc(fullTitle(c)) + "</button></li>";
+    return '<li><button data-info="' + c.id + '" style="--c:' + CATS[c.cat].color + '"><i></i>' + esc(fullTitle(c)) + "</button></li>";
   }).join("");
 
   /* ---------- Контакты ---------- */
@@ -191,13 +138,82 @@
   $("#hours").textContent = CFG.hours;
   $("#admin").innerHTML = esc(CFG.adminName) + ', <a href="tel:+' + CFG.adminPhoneRaw + '">' + esc(CFG.adminPhone) + "</a>";
   $("#links").innerHTML =
-    '<a class="btn btn--ink btn--sm" href="https://wa.me/' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">WhatsApp</a>' +
-    '<a class="btn btn--ghost-ink btn--sm" href="https://t.me/+' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">Telegram</a>' +
-    '<a class="btn btn--ghost-ink btn--sm" href="https://yandex.ru/maps/?text=' + encodeURIComponent("Химки, Сходня, Первомайская улица, 9") + '" target="_blank" rel="noopener">Маршрут</a>';
+    '<a class="btn btn--gold btn--sm" href="https://wa.me/' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">WhatsApp</a>' +
+    '<a class="btn btn--outline btn--sm" href="https://t.me/+' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">Telegram</a>' +
+    '<a class="btn btn--outline btn--sm" href="https://yandex.ru/maps/?text=' + encodeURIComponent("Химки, Сходня, Первомайская улица, 9") + '" target="_blank" rel="noopener">Построить маршрут</a>';
   if (CFG.botUsername) { var bl = $("#botLink"); bl.href = "https://t.me/" + CFG.botUsername + "?start=catalog"; bl.hidden = false; }
 
+  /* ---------- Панели ---------- */
+  var info = $("#info"), sheet = $("#sheet"), form = $("#form"), done = $("#done"), sel = $("#fClub"), lastFocus = null;
+
+  function openPanel(p, focusEl) {
+    if (!lastFocus) lastFocus = document.activeElement;
+    p.hidden = false;
+    document.body.style.overflow = "hidden";
+    requestAnimationFrame(function () { requestAnimationFrame(function () { p.classList.add("is-open"); }); });
+    if (focusEl) setTimeout(function () { focusEl().focus({ preventScroll: true }); }, 350);
+  }
+  function closePanel(p, keepFocus) {
+    p.classList.remove("is-open");
+    setTimeout(function () {
+      p.hidden = true;
+      if (info.hidden && sheet.hidden) {
+        document.body.style.overflow = "";
+        if (!keepFocus && lastFocus) { lastFocus.focus({ preventScroll: true }); lastFocus = null; }
+      }
+    }, reduce ? 0 : 450);
+  }
+
+  function openInfo(id) {
+    var c = byId[id]; if (!c) return;
+    var cat = CATS[c.cat];
+    $("#infoBody").innerHTML =
+      '<div class="info__img"><img src="' + thumb(c.photo, 1080) + '" alt=""></div>' +
+      '<div class="info__body" style="--c:' + cat.color + '">' +
+        '<span class="info__cat">' + esc(cat.name) + " · " + esc(c.age) + "</span>" +
+        '<h2 class="info__title" id="info-title">' + esc(c.title) + "</h2>" +
+        (c.name ? '<p class="info__name">«' + esc(c.name) + "»</p>" : "") +
+        '<p class="info__desc">' + esc(c.desc) + "</p>" +
+        '<dl class="info__dl">' +
+          "<div><dt>Расписание</dt><dd>" + esc(whenText(c)) + "</dd></div>" +
+          "<div><dt>Ведёт</dt><dd>" + esc(c.teacher) + (c.teacherNote ? "<span>" + esc(c.teacherNote) + "</span>" : "") + "</dd></div>" +
+          "<div><dt>Пожертвование</dt><dd>" + esc(c.price || "уточните у администратора") + "</dd></div>" +
+        "</dl>" +
+        '<div class="info__act"><button class="btn btn--gold btn--wide" data-signup="' + c.id + '">Записаться</button>' +
+          (c.phone ? '<a class="btn btn--outline btn--wide" href="tel:' + c.phone.replace(/[^\d+]/g, "") + '">Позвонить педагогу: ' + esc(c.phone) + "</a>" : "") +
+        "</div>" +
+      "</div>";
+    info.querySelector(".sheet__panel").scrollTop = 0;
+    openPanel(info, function () { return $(".info__act .btn", info); });
+  }
+
+  function openSheet(id) {
+    form.hidden = false; done.hidden = true; done.classList.remove("is-on"); $("#fail").hidden = true;
+    sel.value = id && byId[id] ? id : "";
+    if (!info.hidden) closePanel(info, true);
+    openPanel(sheet, function () { return sel.value ? form.elements.student : sel; });
+  }
+
+  document.addEventListener("click", function (e) {
+    var s = e.target.closest("[data-signup]");
+    if (s) { e.preventDefault(); openSheet(s.getAttribute("data-signup")); return; }
+    var i = e.target.closest("[data-info]");
+    if (i) { openInfo(i.getAttribute("data-info")); return; }
+    if (e.target.closest("[data-close]")) closePanel(e.target.closest(".sheet"));
+  });
+  document.addEventListener("keydown", function (e) {
+    var open = !sheet.hidden ? sheet : !info.hidden ? info : null;
+    if (!open) return;
+    if (e.key === "Escape") closePanel(open);
+    if (e.key === "Tab") {
+      var f = $$("button, a[href], input:not(.hp), select, textarea", open).filter(function (x) { return x.offsetParent; });
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+
   /* ---------- Форма записи ---------- */
-  var sheet = $("#sheet"), form = $("#form"), done = $("#done"), sel = $("#fClub"), lastFocus;
   sel.innerHTML = '<option value="">Помогите выбрать</option>' +
     Object.keys(CATS).map(function (k) {
       return '<optgroup label="' + CATS[k].name + '">' + CLUBS.filter(function (c) { return c.cat === k; }).map(function (c) {
@@ -205,45 +221,12 @@
       }).join("") + "</optgroup>";
     }).join("");
 
-  function openSheet(id) {
-    lastFocus = document.activeElement;
-    form.hidden = false; done.hidden = true; done.classList.remove("is-on"); $("#fail").hidden = true;
-    if (id !== undefined) sel.value = byId[id] ? id : "";
-    sheet.hidden = false;
-    document.body.style.overflow = "hidden";
-    requestAnimationFrame(function () { requestAnimationFrame(function () { sheet.classList.add("is-open"); }); });
-    setTimeout(function () { (sel.value ? form.elements.student : sel).focus({ preventScroll: true }); }, 350);
-  }
-  function closeSheet() {
-    sheet.classList.remove("is-open");
-    document.body.style.overflow = "";
-    setTimeout(function () { sheet.hidden = true; if (lastFocus) lastFocus.focus({ preventScroll: true }); }, reduce ? 0 : 450);
-  }
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest("[data-signup]");
-    if (b) { e.preventDefault(); openSheet(b.getAttribute("data-signup") || ""); return; }
-    if (e.target.closest("[data-close]")) closeSheet();
-  });
-  document.addEventListener("keydown", function (e) {
-    if (sheet.hidden) return;
-    if (e.key === "Escape") closeSheet();
-    if (e.key === "Tab") { // держим фокус внутри шторки
-      var f = $$("button, a[href], input:not(.hp), select, textarea", $(".sheet__panel")).filter(function (x) { return x.offsetParent; });
-      if (!f.length) return;
-      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
-      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
-    }
-  });
-
-  // кому заниматься → подпись поля
   form.addEventListener("change", function (e) {
     if (e.target.name !== "forWhom") return;
-    var self = e.target.value === "Я сам(а)";
-    $("#studentField").style.display = self ? "none" : "";
+    $("#studentField").style.display = e.target.value === "Я сам(а)" ? "none" : "";
     $("#studentField span").textContent = e.target.value === "Всей семьёй" ? "Кто ещё придёт" : "Имя ученика";
   });
 
-  // маска телефона
   var phone = form.elements.phone;
   phone.addEventListener("input", function () {
     var d = phone.value.replace(/\D/g, "");
@@ -259,34 +242,36 @@
   phone.addEventListener("focus", function () { if (!phone.value) phone.value = "+7 "; });
 
   function validate() {
-    var ok = true;
     var nameF = form.elements.name.closest(".field");
     var nm = form.elements.name.value.trim().length >= 2;
-    nameF.classList.toggle("is-bad", !nm); ok = ok && nm;
+    nameF.classList.toggle("is-bad", !nm);
     var ph = phone.value.replace(/\D/g, "").length === 11;
-    phone.closest(".field").classList.toggle("is-bad", !ph); ok = ok && ph;
+    phone.closest(".field").classList.toggle("is-bad", !ph);
     var cs = form.elements.consent.checked;
-    $(".field__err--check").classList.toggle("is-on", !cs); ok = ok && cs;
-    if (!ok) { var bad = $(".is-bad input", form) || form.elements.consent; bad.focus(); }
+    $(".field__err--check").classList.toggle("is-on", !cs);
+    var ok = nm && ph && cs;
+    if (!ok) ($(".is-bad input", form) || form.elements.consent).focus();
     return ok;
+  }
+
+  function message(d) {
+    return "Здравствуйте! Хочу записаться в «Кинонию».\n" +
+      "Занятие: " + d.club + "\n" +
+      "Кто занимается: " + d.forWhom + (d.student ? ", " + d.student : "") + (d.age ? ", " + d.age + " лет" : "") + "\n" +
+      "Контакт: " + d.name + ", " + d.phone + " (" + d.contact + ")" +
+      (d.comment ? "\nКомментарий: " + d.comment : "");
   }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (form.elements.website.value) return; // бот-ловушка
+    if (form.elements.website.value) return;
     if (!validate()) return;
     var c = byId[sel.value];
     var data = {
-      source: "site",
-      clubId: sel.value || "",
-      club: c ? fullTitle(c) : "Помочь с выбором",
-      forWhom: form.elements.forWhom.value,
-      student: form.elements.student.value.trim(),
-      age: form.elements.age.value.trim(),
-      name: form.elements.name.value.trim(),
-      phone: phone.value,
-      contact: form.elements.contact.value,
-      comment: form.elements.comment.value.trim()
+      source: "site", clubId: sel.value || "", club: c ? fullTitle(c) : "Помочь с выбором",
+      forWhom: form.elements.forWhom.value, student: form.elements.student.value.trim(),
+      age: form.elements.age.value.trim(), name: form.elements.name.value.trim(),
+      phone: phone.value, contact: form.elements.contact.value, comment: form.elements.comment.value.trim()
     };
     var btn = $("#submit");
     btn.disabled = true; btn.textContent = "Отправляем…";
@@ -298,12 +283,9 @@
       return;
     }
 
-    fetch(CFG.endpoint, { method: "POST", body: JSON.stringify(data) }) // text/plain — без preflight
+    fetch(CFG.endpoint, { method: "POST", body: JSON.stringify(data) })
       .then(function (r) { return r.json(); })
-      .then(function (res) {
-        if (!res.ok) throw new Error(res.error || "fail");
-        showDone(data, res.id, false);
-      })
+      .then(function (res) { if (!res.ok) throw new Error(res.error || "fail"); showDone(data, res.id, false); })
       .catch(function () {
         var f = $("#fail");
         f.hidden = false;
@@ -311,14 +293,6 @@
       })
       .finally(function () { btn.disabled = false; btn.textContent = "Отправить заявку"; });
   });
-
-  function message(d) {
-    return "Здравствуйте! Хочу записаться в «Кинонию».\n" +
-      "Занятие: " + d.club + "\n" +
-      "Кто занимается: " + d.forWhom + (d.student ? ", " + d.student : "") + (d.age ? ", " + d.age + " лет" : "") + "\n" +
-      "Контакт: " + d.name + ", " + d.phone + " (" + d.contact + ")" +
-      (d.comment ? "\nКомментарий: " + d.comment : "");
-  }
 
   function showDone(d, id, viaWa) {
     form.hidden = true; done.hidden = false;
@@ -330,10 +304,10 @@
     if (CFG.botUsername && id) { db.href = "https://t.me/" + CFG.botUsername + "?start=r" + id; db.hidden = false; }
     else db.hidden = true;
     form.reset(); $("#studentField").style.display = "";
-    $(".done .btn--ghost-ink").focus({ preventScroll: true });
+    $(".done .btn--outline").focus({ preventScroll: true });
   }
 
-  // ссылка вида #zapis=icon открывает форму на нужном занятии
-  var m = location.hash.match(/^#zapis(?:=([\w-]+))?/);
-  if (m) setTimeout(function () { openSheet(m[1] || ""); }, 600);
+  // #zapis=icon открывает запись, #kruzhok=icon — карточку занятия
+  var m = location.hash.match(/^#(zapis|kruzhok)(?:=([\w-]+))?/);
+  if (m) setTimeout(function () { m[1] === "kruzhok" && m[2] ? openInfo(m[2]) : openSheet(m[2] || ""); }, 500);
 })();

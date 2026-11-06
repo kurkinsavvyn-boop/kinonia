@@ -105,7 +105,7 @@
           el.style.removeProperty("--d");
         }, 1400);
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: .12 });
+    }, { rootMargin: "0px 0px 10% 0px", threshold: 0 });
     els.forEach(function (el) { io.observe(el); });
   }
 
@@ -152,7 +152,7 @@
     var cat = CATS[c.cat];
     return '<li class="card" data-id="' + c.id + '" style="--c:' + cat.color + '">' +
       '<button class="card__btn" data-info="' + c.id + '">' +
-        '<span class="card__img"><img src="' + thumb(c.photo, 640) + '" alt="" loading="lazy"><span class="card__age">' + esc(c.age) + "</span></span>" +
+        '<span class="card__img"><img src="' + thumb(c.photo, 640) + '" alt="" decoding="async"><span class="card__age">' + esc(c.age) + "</span></span>" +
         '<span class="card__body">' +
           '<span class="card__cat">' + esc(cat.name) + "</span>" +
           '<span class="card__title">' + esc(c.title) + "</span>" +
@@ -163,8 +163,8 @@
       "</button></li>";
   }).join("");
 
-  $$(".card", cards).forEach(function (el, i) { el.style.setProperty("--d", (i % 3) * 90 + "ms"); });
-  reveal($$("[data-reveal], .card").concat($$("[data-reveal-kids] > *").map(function (el, i) { el.style.setProperty("--d", i * 120 + "ms"); return el; })));
+  // карточки видны сразу: при быстрой прокрутке на телефоне не должно быть пустых мест
+  reveal($$("[data-reveal]").concat($$("[data-reveal-kids] > *").map(function (el, i) { el.style.setProperty("--d", i * 120 + "ms"); return el; })));
 
   function render() {
     var n = 0;

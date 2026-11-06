@@ -17,7 +17,7 @@ window.KINONIA_CATEGORIES = {
 window.KINONIA_CLUBS = [
   {
     id: "izo",
-    photo: "img/izo.jpg",
+    photo: "img/c/izo.webp",
     title: "Изостудия",
     name: "Юный художник",
     cat: "art", who: "kids", age: "4–16 лет",
@@ -33,7 +33,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "pyro",
-    photo: "img/pyro.jpg",
+    photo: "img/c/pyro.webp",
     title: "Выжигание по дереву",
     name: "Пирография",
     cat: "craft", who: "kids", age: "дети",
@@ -49,7 +49,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "tatyanka",
-    photo: "img/tatyanka.jpg",
+    photo: "img/c/tatyanka.webp",
     title: "Художественная резьба по дереву",
     name: "Татьянка",
     cat: "craft", who: "all", age: "10+ и взрослые",
@@ -65,7 +65,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "dance",
-    photo: "img/dance.jpg",
+    photo: "img/c/dance.webp",
     title: "Студия исторического танца",
     name: "Свет",
     cat: "art", who: "all", age: "все возрасты",
@@ -78,7 +78,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "eng",
-    photo: "img/eng.jpg",
+    photo: "img/c/eng.webp",
     title: "Английский и корейский язык",
     name: "",
     cat: "mind", who: "all", age: "0+",
@@ -94,7 +94,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "crochet",
-    photo: "img/crochet.jpg",
+    photo: "img/c/crochet.webp",
     title: "Вязание крючком",
     name: "Волшебные петельки",
     cat: "craft", who: "kids", age: "с 5 лет",
@@ -110,7 +110,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "icon",
-    photo: "img/icon.jpg",
+    photo: "img/c/icon.webp",
     title: "Иконописная мастерская",
     name: "Под кровом",
     cat: "art", who: "adults", age: "14+",
@@ -126,7 +126,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "chess",
-    photo: "img/chess.jpg",
+    photo: "img/c/chess.webp",
     title: "Шахматы",
     name: "",
     cat: "mind", who: "all", age: "6+",
@@ -139,7 +139,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "greek",
-    photo: "img/greek.webp",
+    photo: "img/c/greek.webp",
     title: "Греческий язык",
     name: "",
     cat: "mind", who: "all", age: "10+ и взрослые",
@@ -153,7 +153,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "psy",
-    photo: "img/psy.jpg",
+    photo: "img/c/psy.webp",
     title: "Психологические консультации",
     name: "",
     cat: "soul", who: "adults", age: "16+",
@@ -167,7 +167,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "cinema",
-    photo: "img/cinema.jpg",
+    photo: "img/c/cinema.webp",
     title: "Психологический киноклуб",
     name: "",
     cat: "soul", who: "adults", age: "16+",
@@ -181,7 +181,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "guitar",
-    photo: "img/guitar.jpg",
+    photo: "img/c/guitar.webp",
     title: "Гитара",
     name: "",
     cat: "art", who: "all", age: "7+",
@@ -197,7 +197,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "writing",
-    photo: "img/writing.jpg",
+    photo: "img/c/writing.webp",
     title: "Писательская мастерская",
     name: "Черновик",
     cat: "art", who: "all", age: "подростки и взрослые",
@@ -210,7 +210,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "sew-kids",
-    photo: "img/sew-kids.jpg",
+    photo: "img/c/sew-kids.webp",
     title: "Швейная мастерская для детей",
     name: "Нитка за ниткой",
     cat: "craft", who: "kids", age: "5+",
@@ -223,7 +223,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "sew-adults",
-    photo: "img/sew-adults.jpg",
+    photo: "img/c/sew-adults.webp",
     title: "Курсы кройки и шитья",
     name: "",
     cat: "craft", who: "adults", age: "взрослые",
@@ -236,7 +236,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "logoped",
-    photo: "img/logoped.jpg",
+    photo: "img/c/logoped.webp",
     title: "Логопед-дефектолог",
     name: "",
     cat: "family", who: "kids", age: "от 1,5 лет",
@@ -250,7 +250,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "family-classes",
-    photo: "img/family-classes.jpg",
+    photo: "img/c/family-classes.webp",
     title: "Семейные классы",
     name: "",
     cat: "family", who: "kids", age: "1–5 класс",
@@ -263,7 +263,7 @@ window.KINONIA_CLUBS = [
   },
   {
     id: "classical",
-    photo: "img/classical.jpg",
+    photo: "img/c/classical.webp",
     title: "Классические беседы",
     name: "",
     cat: "family", who: "kids", age: "4–11 лет",

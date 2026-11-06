@@ -21,7 +21,9 @@
   function thumb(url, w) {
     if (!url) return "";
     var m = url.match(/^https:\/\/static\.tildacdn\.com\/(tild[^/]+)\/(.+)$/);
-    return m ? "https://thb.tildacdn.com/" + m[1] + "/-/resize/" + w + "x/" + m[2] : url;
+    if (m) return "https://thb.tildacdn.com/" + m[1] + "/-/resize/" + w + "x/" + m[2];
+    // свои фото: маленькая версия для карточек, большая для подробного описания
+    return w <= 700 ? url.replace(/\.webp$/, "-sm.webp") : url;
   }
   function whenText(c) {
     if (!c.slots.length) return c.flex;

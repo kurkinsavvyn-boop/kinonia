@@ -152,7 +152,7 @@ button { font: inherit; color: inherit; }
 .hero__text { min-width: 0; }
 .hero__title { margin: 0; line-height: 0; }
 .hero__title img { width: min(560px, 100%); height: auto; }
-.hero__gloss { margin: 22px 0 0; font: 400 19px/1.4 var(--display); color: var(--ochre); }
+.hero__gloss { margin: 22px 0 0; font: 400 19px/1.4 var(--display); color: #80510E; }
 .hero__gloss i { font-style: normal; }
 .hero__lead { margin: 10px 0 0; max-width: 26em; font-size: clamp(19px, 1rem + .4vw, 23px); line-height: 1.5; color: var(--ink-2); }
 .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }

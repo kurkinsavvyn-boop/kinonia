@@ -38,8 +38,74 @@
 
   /* ---------- Шапка ---------- */
   var bar = $("#bar");
-  var onScroll = function () { bar.classList.toggle("is-solid", scrollY > innerHeight * .7); };
+  var onScroll = function () { bar.classList.toggle("is-solid", scrollY > 24); };
   addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  // меню-«бургер» на планшете и телефоне
+  var burger = $("#burger");
+  function setMenu(open) {
+    bar.classList.toggle("is-menu", open);
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    document.documentElement.classList.toggle("no-scroll", open);
+  }
+  burger.addEventListener("click", function () { setMenu(!bar.classList.contains("is-menu")); });
+  $$("#nav a").forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+  addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+  addEventListener("resize", function () { if (innerWidth > 980) setMenu(false); });
+
+  /* ---------- Первый экран: арки с фото ---------- */
+  $$("[data-arch]").forEach(function (arch, k) {
+    var imgs = $$("img", arch), i = 0;
+    imgs[0].classList.add("is-on");
+    if (reduce || imgs.length < 2) return;
+    setTimeout(function () {
+      setInterval(function () {
+        imgs[i].classList.toggle("is-on", false);
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add("is-on");
+      }, 4200);
+    }, 1400 + k * 1400);
+  });
+  // лёгкий параллакс арок за курсором
+  var stage = $(".hero__stage");
+  if (stage && !reduce && matchMedia("(pointer: fine)").matches) {
+    var raf = 0;
+    $(".hero").addEventListener("pointermove", function (e) {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = 0;
+        var x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+        stage.style.setProperty("--mx", x.toFixed(3));
+        stage.style.setProperty("--my", y.toFixed(3));
+      });
+    });
+  }
+
+  /* ---------- Бегущая строка с названиями занятий ---------- */
+  var tick = $("#ticker");
+  if (tick) {
+    var row = CLUBS.map(function (c) { return "<span>" + esc(c.title) + "</span><i></i>"; }).join("");
+    tick.innerHTML = '<div class="ticker__row">' + row + '</div><div class="ticker__row">' + row + "</div>";
+  }
+
+  /* ---------- Появление блоков при прокрутке ---------- */
+  function reveal(els) {
+    if (reduce || !("IntersectionObserver" in window)) return;
+    els.forEach(function (el) { el.classList.add("rv"); });
+    var io = new IntersectionObserver(function (list) {
+      list.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        io.unobserve(el);
+        el.classList.add("in");
+        setTimeout(function () {
+          el.classList.toggle("rv", false); el.classList.toggle("in", false);
+          el.style.removeProperty("--d");
+        }, 1400);
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: .12 });
+    els.forEach(function (el) { io.observe(el); });
+  }
 
   /* ---------- Фильтры ---------- */
   var state = { who: "any", cat: "any", day: 0 };
@@ -95,6 +161,9 @@
       "</button></li>";
   }).join("");
 
+  $$(".card", cards).forEach(function (el, i) { el.style.setProperty("--d", (i % 3) * 90 + "ms"); });
+  reveal($$("[data-reveal], .card").concat($$("[data-reveal-kids] > *").map(function (el, i) { el.style.setProperty("--d", i * 120 + "ms"); return el; })));
+
   function render() {
     var n = 0;
     $$(".card", cards).forEach(function (el) {
@@ -138,7 +207,7 @@
   $("#hours").textContent = CFG.hours;
   $("#admin").innerHTML = esc(CFG.adminName) + ', <a href="tel:+' + CFG.adminPhoneRaw + '">' + esc(CFG.adminPhone) + "</a>";
   $("#links").innerHTML =
-    '<a class="btn btn--gold btn--sm" href="https://wa.me/' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">WhatsApp</a>' +
+    '<a class="btn btn--red btn--sm" href="https://wa.me/' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">WhatsApp</a>' +
     '<a class="btn btn--outline btn--sm" href="https://t.me/+' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">Telegram</a>' +
     '<a class="btn btn--outline btn--sm" href="https://yandex.ru/maps/?text=' + encodeURIComponent("Химки, Сходня, Первомайская улица, 9") + '" target="_blank" rel="noopener">Построить маршрут</a>';
   if (CFG.botUsername) { var bl = $("#botLink"); bl.href = "https://t.me/" + CFG.botUsername + "?start=catalog"; bl.hidden = false; }
@@ -179,7 +248,7 @@
           "<div><dt>Ведёт</dt><dd>" + esc(c.teacher) + (c.teacherNote ? "<span>" + esc(c.teacherNote) + "</span>" : "") + "</dd></div>" +
           "<div><dt>Пожертвование</dt><dd>" + esc(c.price || "уточните у администратора") + "</dd></div>" +
         "</dl>" +
-        '<div class="info__act"><button class="btn btn--gold btn--wide" data-signup="' + c.id + '">Записаться</button>' +
+        '<div class="info__act"><button class="btn btn--red btn--wide" data-signup="' + c.id + '">Записаться</button>' +
           (c.phone ? '<a class="btn btn--outline btn--wide" href="tel:' + c.phone.replace(/[^\d+]/g, "") + '">Позвонить педагогу: ' + esc(c.phone) + "</a>" : "") +
         "</div>" +
       "</div>";

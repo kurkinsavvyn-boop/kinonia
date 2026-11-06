@@ -18,36 +18,55 @@
 
 <header class="bar" id="bar">
   <a class="bar__logo" href="#top" aria-label="Кинония, в начало">
-    <img class="bar__logo-w" src="img/logo-mark-white.png" alt="" width="180" height="35">
-    <img class="bar__logo-d" src="img/logo-mark.png" alt="" width="180" height="35">
+    <img src="img/logo-mark.png" alt="" width="180" height="35">
   </a>
-  <nav class="bar__nav" aria-label="Разделы">
+  <button class="bar__burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+  <nav class="bar__nav" id="nav" aria-label="Разделы">
     <a href="#about">О центре</a>
     <a href="#catalog">Занятия</a>
     <a href="#week">Расписание</a>
     <a href="#visit">Контакты</a>
     <a href="http://shodnyahramnew.ru/" target="_blank" rel="noopener">Сайт храма</a>
   </nav>
-  <button class="btn btn--gold btn--sm" data-signup>Записаться</button>
+  <button class="btn btn--red btn--sm" data-signup>Записаться</button>
 </header>
 
 <main id="top">
 
   <section class="hero" aria-labelledby="hero-title">
-    <img class="hero__bg" src="img/hero.jpg" alt="Здание центра «Кинония» на территории Троицкого храма" fetchpriority="high">
-    <div class="hero__body">
-      <h1 class="hero__title" id="hero-title"><img src="img/logo-kinonia-white.png" alt="Кинония — духовно-просветительский центр" width="1200" height="350"></h1>
-      <p class="hero__gloss">от греч. κοινωνία — сообщество, связь, общее дело</p>
-      <p class="hero__lead">18 кружков и студий для детей и взрослых при храме Живоначальной Троицы на Сходне</p>
-      <div class="hero__cta">
-        <a class="btn btn--white" href="#catalog">Выбрать занятие</a>
-        <button class="btn btn--line" data-signup>Записаться</button>
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <h1 class="hero__title" id="hero-title"><img src="img/logo-kinonia.png" alt="Кинония — духовно-просветительский центр" width="1200" height="350"></h1>
+        <p class="hero__gloss">от греч. <i>κοινωνία</i> — общение, сообщество, общее дело</p>
+        <p class="hero__lead">18 кружков и студий для детей и взрослых при храме Живоначальной Троицы на Сходне</p>
+        <div class="hero__cta">
+          <a class="btn btn--red" href="#catalog">Выбрать занятие</a>
+          <button class="btn btn--outline" data-signup>Записаться</button>
+        </div>
+        <ul class="hero__facts">
+          <li><b data-count="18">18</b><span>занятий</span></li>
+          <li><b>1,5+</b><span>лет — младшим ученикам</span></li>
+          <li><b>с 2018</b><span>года работаем</span></li>
+        </ul>
+      </div>
+      <div class="hero__stage" aria-hidden="true">
+        <svg class="hero__ring" viewBox="0 0 600 600">
+          <defs><path id="ringPath" d="M300,300 m-266,0 a266,266 0 1,1 532,0 a266,266 0 1,1 -532,0"/></defs>
+          <circle class="hero__ring-line" cx="300" cy="300" r="292"/>
+          <text><textPath href="#ringPath" textLength="1665">ОБЩЕНИЕ ✦ ТВОРЧЕСТВО ✦ ВЕРА ✦ ЗНАНИЕ ✦ СЕМЬЯ ✦ РЕМЕСЛО ✦ </textPath></text>
+        </svg>
+        <div class="arch arch--l" data-arch><img src="img/pyro.jpg" alt=""><img src="img/crochet.jpg" alt=""><img src="img/sew-kids.jpg" alt=""><img src="img/greek.webp" alt=""></div>
+        <div class="arch arch--c" data-arch><img src="img/icon.jpg" alt=""><img src="img/izo.jpg" alt=""><img src="img/tatyanka.jpg" alt=""><img src="img/about.jpg" alt=""></div>
+        <div class="arch arch--r" data-arch><img src="img/chess.jpg" alt=""><img src="img/classical.jpg" alt=""><img src="img/family-classes.jpg" alt=""><img src="img/dance.jpg" alt=""></div>
       </div>
     </div>
+    <a class="hero__down" href="#about" aria-label="Листать вниз"><span></span></a>
   </section>
 
+  <div class="ticker" aria-hidden="true"><div class="ticker__track" id="ticker"></div></div>
+
   <section class="about" id="about" aria-labelledby="about-title">
-    <div class="wrap about__grid">
+    <div class="wrap about__grid" data-reveal>
       <div class="about__text">
         <h2 class="h2" id="about-title">Мост между храмом и&nbsp;современным человеком</h2>
         <p class="about__mission">Через образование, культуру и живое общение мы раскрываем Церковь как живое, дышащее пространство любви, смысла и духовного роста.</p>
@@ -58,7 +77,7 @@
         <img src="img/about.jpg" alt="Ученики иконописной мастерской с работами у входа в центр" loading="lazy">
       </figure>
     </div>
-    <figure class="wrap quote">
+    <figure class="wrap quote" data-reveal>
       <blockquote>«Кинония — это одно из имён Церкви. Церковь есть сообщество, в котором происходит взаимообщение верующих с Богом и друг с другом — в Боге».</blockquote>
       <figcaption>Митрополит Филарет (Вахромеев)</figcaption>
     </figure>
@@ -66,7 +85,7 @@
 
   <section class="catalog" id="catalog" aria-labelledby="catalog-title">
     <div class="wrap">
-      <h2 class="h2 h2--center" id="catalog-title">Занятия 2025–2026</h2>
+      <h2 class="h2 h2--center" id="catalog-title" data-reveal>Занятия 2025–2026</h2>
       <p class="catalog__lead">Выбирайте для души и разума, для всей семьи. Нажмите на карточку, чтобы прочитать подробнее и записаться.</p>
 
       <div class="filters" role="group" aria-label="Фильтры">
@@ -90,7 +109,7 @@
 
   <section class="week" id="week" aria-labelledby="week-title">
     <div class="wrap">
-      <h2 class="h2 h2--center" id="week-title">Расписание на неделю</h2>
+      <h2 class="h2 h2--center" id="week-title" data-reveal>Расписание на неделю</h2>
       <p class="catalog__lead">Наведите на занятие, чтобы увидеть все его дни. Нажмите, чтобы открыть подробности.</p>
       <div class="grid" id="grid"></div>
       <div class="flex">
@@ -102,14 +121,14 @@
 
   <section class="steps" aria-labelledby="steps-title">
     <div class="wrap">
-      <h2 class="h2 h2--center" id="steps-title">Как записаться</h2>
-      <ol class="steps__list">
+      <h2 class="h2 h2--center" id="steps-title" data-reveal>Как записаться</h2>
+      <ol class="steps__list" data-reveal-kids>
         <li><b>Выберите занятие</b><span>В каталоге или в расписании. Если сомневаетесь, отметьте «Помогите выбрать» — подскажем.</span></li>
         <li><b>Оставьте заявку</b><span>Имя, телефон и возраст ученика. Это займёт минуту.</span></li>
         <li><b>Мы перезвоним</b><span>Администратор свяжется с вами в течение рабочего дня и пригласит на первое занятие.</span></li>
       </ol>
       <div class="steps__cta">
-        <button class="btn btn--gold" data-signup>Оставить заявку</button>
+        <button class="btn btn--red" data-signup>Оставить заявку</button>
         <a class="btn btn--outline" id="botLink" href="#" hidden target="_blank" rel="noopener">Записаться через Telegram</a>
       </div>
     </div>
@@ -118,7 +137,7 @@
   <section class="visit" id="visit" aria-labelledby="visit-title">
     <div class="wrap visit__grid">
       <div>
-        <h2 class="h2" id="visit-title">Будем рады познакомиться</h2>
+        <h2 class="h2" id="visit-title" data-reveal>Будем рады познакомиться</h2>
         <address class="visit__addr" id="addr"></address>
         <dl class="visit__dl">
           <dt>Администратор центра</dt><dd id="admin"></dd>
@@ -228,7 +247,7 @@
       </label>
       <em class="field__err field__err--check">Без согласия мы не сможем вам перезвонить</em>
 
-      <button class="btn btn--gold btn--wide" type="submit" id="submit">Отправить заявку</button>
+      <button class="btn btn--red btn--wide" type="submit" id="submit">Отправить заявку</button>
       <p class="form__fail" id="fail" hidden></p>
     </form>
 
@@ -239,7 +258,7 @@
       </svg>
       <h2 class="form__title">Заявка отправлена</h2>
       <p class="form__sub" id="doneText"></p>
-      <a class="btn btn--gold btn--wide" id="doneBot" hidden target="_blank" rel="noopener">Получать уведомления в Telegram</a>
+      <a class="btn btn--red btn--wide" id="doneBot" hidden target="_blank" rel="noopener">Получать уведомления в Telegram</a>
       <button class="btn btn--outline btn--wide" data-close>Вернуться к занятиям</button>
     </div>
   </div>

@@ -238,8 +238,21 @@
   function openInfo(id) {
     var c = byId[id]; if (!c) return;
     var cat = CATS[c.cat];
+    // фото занятия: основное + дополнительные из поля photos
+    var pics = [c.photo].concat(c.photos || []);
+    var gallery = pics.length < 2
+      ? '<div class="info__img"><img src="' + thumb(c.photo, 1080) + '" alt=""></div>'
+      : '<div class="info__img gal">' +
+          '<div class="gal__track">' + pics.map(function (p, i) {
+            // документы (дипломы, грамоты) показываем целиком, без обрезки
+            return '<img src="' + thumb(p, 1080) + '" alt="Фото ' + (i + 1) + ' из ' + pics.length + '"' + (/-doc\./.test(p) ? ' class="is-doc"' : "") + (i ? ' loading="lazy"' : "") + ">";
+          }).join("") + "</div>" +
+          '<button class="gal__btn gal__btn--prev" aria-label="Предыдущее фото">‹</button>' +
+          '<button class="gal__btn gal__btn--next" aria-label="Следующее фото">›</button>' +
+          '<div class="gal__dots">' + pics.map(function (p, i) { return "<i" + (i ? "" : ' class="is-on"') + "></i>"; }).join("") + "</div>" +
+        "</div>";
     $("#infoBody").innerHTML =
-      '<div class="info__img"><img src="' + thumb(c.photo, 1080) + '" alt=""></div>' +
+      gallery +
       '<div class="info__body" style="--c:' + cat.color + '">' +
         '<span class="info__cat">' + esc(cat.name) + " · " + esc(c.age) + "</span>" +
         '<h2 class="info__title" id="info-title">' + esc(c.title) + "</h2>" +
@@ -256,6 +269,20 @@
       "</div>";
     info.querySelector(".sheet__panel").scrollTop = 0;
     openPanel(info, function () { return $(".info__act .btn", info); });
+    bindGallery($(".gal", info));
+  }
+
+  // листание фото: пальцем (scroll-snap), стрелками и клавишами
+  function bindGallery(g) {
+    if (!g) return;
+    var track = $(".gal__track", g), dots = $$(".gal__dots i", g);
+    var go = function (dir) { track.scrollBy({ left: dir * track.clientWidth, behavior: reduce ? "auto" : "smooth" }); };
+    $(".gal__btn--prev", g).addEventListener("click", function () { go(-1); });
+    $(".gal__btn--next", g).addEventListener("click", function () { go(1); });
+    track.addEventListener("scroll", function () {
+      var i = Math.round(track.scrollLeft / track.clientWidth);
+      dots.forEach(function (d, k) { d.classList.toggle("is-on", k === i); });
+    }, { passive: true });
   }
 
   function openSheet(id) {

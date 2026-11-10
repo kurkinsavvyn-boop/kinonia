@@ -127,6 +127,7 @@ window.KINONIA_CLUBS = [
   {
     id: "chess",
     photo: "img/c/chess.webp",
+    photos: ["img/c/chess-doc.webp"],
     title: "Шахматы",
     name: "",
     cat: "mind", who: "all", age: "6+",
@@ -224,6 +225,7 @@ window.KINONIA_CLUBS = [
   {
     id: "sew-adults",
     photo: "img/c/sew-adults.webp",
+    photos: ["img/c/sew-adults-2.webp"],
     title: "Курсы кройки и шитья",
     name: "",
     cat: "craft", who: "adults", age: "взрослые",
@@ -251,6 +253,7 @@ window.KINONIA_CLUBS = [
   {
     id: "family-classes",
     photo: "img/c/family-classes.webp",
+    photos: ["img/c/family-classes-2.webp"],
     title: "Семейные классы",
     name: "",
     cat: "family", who: "kids", age: "1–5 класс",

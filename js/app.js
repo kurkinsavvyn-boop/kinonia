@@ -235,17 +235,23 @@
     }, reduce ? 0 : 450);
   }
 
+  // одно фото целиком (без обрезки) на размытом фоне из того же снимка
+  function slide(p, i, n) {
+    var src = thumb(p, 1080), doc = /-doc\./.test(p);
+    return '<div class="ph' + (doc ? ' is-doc' : '') + '"' + (doc ? '' : ' style="background-image:url(' + src + ')"') + '>' +
+      '<img src="' + src + '" alt="' + (n > 1 ? 'Фото ' + (i + 1) + ' из ' + n : '') + '"' + (i ? ' loading="lazy"' : '') + '></div>';
+  }
   function openInfo(id) {
     var c = byId[id]; if (!c) return;
     var cat = CATS[c.cat];
     // фото занятия: основное + дополнительные из поля photos
     var pics = [c.photo].concat(c.photos || []);
     var gallery = pics.length < 2
-      ? '<div class="info__img"><img src="' + thumb(c.photo, 1080) + '" alt=""></div>'
+      ? '<div class="info__img">' + slide(c.photo, 0, 1) + '</div>'
       : '<div class="info__img gal">' +
           '<div class="gal__track">' + pics.map(function (p, i) {
             // документы (дипломы, грамоты) показываем целиком, без обрезки
-            return '<img src="' + thumb(p, 1080) + '" alt="Фото ' + (i + 1) + ' из ' + pics.length + '"' + (/-doc\./.test(p) ? ' class="is-doc"' : "") + (i ? ' loading="lazy"' : "") + ">";
+            return slide(p, i, pics.length);
           }).join("") + "</div>" +
           '<button class="gal__btn gal__btn--prev" aria-label="Предыдущее фото">‹</button>' +
           '<button class="gal__btn gal__btn--next" aria-label="Следующее фото">›</button>' +

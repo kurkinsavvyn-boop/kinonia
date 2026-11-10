@@ -370,7 +370,13 @@
       "Занятие: " + d.club + "\n" +
       "Кто занимается: " + d.forWhom + (d.student ? ", " + d.student : "") + (d.age ? ", " + d.age + " лет" : "") + "\n" +
       "Контакт: " + d.name + ", " + d.phone + " (" + d.contact + ")" +
-      (d.comment ? "\nКомментарий: " + d.comment : "");
+      (d.comment ? "\nКомментарий: " + d.comment : "") +
+      "\nСогласие на обработку персональных данных дано на сайте " + consentStamp();
+  }
+  // дата и время согласия — остаются в заявке как подтверждение
+  function consentStamp() {
+    var n = new Date(), p = function (x) { return (x < 10 ? "0" : "") + x; };
+    return p(n.getDate()) + "." + p(n.getMonth() + 1) + "." + n.getFullYear() + " " + p(n.getHours()) + ":" + p(n.getMinutes()) + " (версия согласия от 10.11.2026)";
   }
 
   form.addEventListener("submit", function (e) {

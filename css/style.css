@@ -438,3 +438,11 @@ button { font: inherit; color: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* юридические подсказки в форме и в подвале */
+.form__legal { margin: -6px 0 14px; font-size: 13.5px; color: var(--ink-3); }
+.form__legal a, .foot__legal a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+.check a { color: var(--red); text-decoration: underline; text-underline-offset: 3px; }
+.field__hint { display: block; margin-top: 4px; font-size: 13px; color: var(--ink-3); }
+.foot__legal { width: 100%; font-size: 13.5px; margin-top: 4px; }
+.foot__legal a { color: var(--ink-3); }

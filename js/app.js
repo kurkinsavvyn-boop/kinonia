@@ -285,10 +285,17 @@
     var go = function (dir) { track.scrollBy({ left: dir * track.clientWidth, behavior: reduce ? "auto" : "smooth" }); };
     $(".gal__btn--prev", g).addEventListener("click", function () { go(-1); });
     $(".gal__btn--next", g).addEventListener("click", function () { go(1); });
+    var imgs = $$("img", track), cur = 0;
+    // высота галереи подстраивается под текущее фото — без пустых полос сверху и снизу
+    var fit = function () { var h = imgs[cur] && imgs[cur].offsetHeight; if (h) track.style.height = h + "px"; };
+    imgs.forEach(function (im) { im.addEventListener("load", fit); });
     track.addEventListener("scroll", function () {
       var i = Math.round(track.scrollLeft / track.clientWidth);
       dots.forEach(function (d, k) { d.classList.toggle("is-on", k === i); });
+      if (i !== cur) { cur = i; fit(); }
     }, { passive: true });
+    addEventListener("resize", fit);
+    fit();
   }
 
   function openSheet(id) {

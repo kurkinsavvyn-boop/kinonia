@@ -13,7 +13,7 @@ body.legal { background: #fff; color: var(--ink); font-family: var(--sans); line
 .legal__doc ul, .legal__doc ol { padding-left: 22px; margin: 8px 0 14px; }
 .legal__doc li { margin: 5px 0; }
 .legal__doc a { color: var(--red); }
-.legal__box { background: #F7F4F0; border-left: 3px solid var(--red); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+.legal__box { background: #F7F4F0; padding: 16px 20px; border-radius: 10px; margin: 16px 0; }
 .legal__box p { margin: 0; }
 .legal__doc table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 15.5px; }
 .legal__doc th, .legal__doc td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }

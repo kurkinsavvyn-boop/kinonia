@@ -446,3 +446,21 @@ button { font: inherit; color: inherit; }
 .field__hint { display: block; margin-top: 4px; font-size: 13px; color: var(--ink-3); }
 .foot__legal { width: 100%; font-size: 13.5px; margin-top: 4px; }
 .foot__legal a { color: var(--ink-3); }
+
+/* кнопки записи: звонок, MAX, Telegram, WhatsApp */
+.cbtns { display: grid; gap: 10px; margin: 6px 0 12px; }
+.cbtns__row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.cbtns__row--inline { display: contents; }
+.cbtn { gap: 8px; }
+.cdot { width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--b); }
+.nw { white-space: nowrap; }
+.cbtn--max { --b: #6A3DF0; }
+.cbtn--tg { --b: #2AABEE; }
+.cbtn--wa { --b: #25D366; }
+.info__act .cbtns__row { margin: 10px 0; }
+.info__how { margin: 0 0 10px; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+.btn--ghost { background: transparent; border-color: transparent; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+.contact__note { font-size: 13.5px; color: var(--ink-3); margin: 0; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 15px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 200; max-width: calc(100% - 32px); text-align: center; }
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+@media (max-width: 420px) { .cbtns__row { grid-template-columns: 1fr; } }

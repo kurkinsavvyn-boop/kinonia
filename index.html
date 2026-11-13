@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://static.tildacdn.com/tild6534-3261-4866-a431-323131633238/DzECFIddaro.jpg">
 <meta name="theme-color" content="#A12F2F">
 <link rel="icon" href="img/favicon.png">
-<link rel="stylesheet" href="css/style.css?v=202611101200">
+<link rel="stylesheet" href="css/style.css?v=202611131930">
 </head>
 <body>
 
@@ -124,11 +124,11 @@
       <h2 class="h2 h2--center" id="steps-title" data-reveal>Как записаться</h2>
       <ol class="steps__list" data-reveal-kids>
         <li><b>Выберите занятие</b><span>В каталоге или в расписании. Если сомневаетесь, отметьте «Помогите выбрать» — подскажем.</span></li>
-        <li><b>Оставьте заявку</b><span>Имя, телефон и возраст ученика. Это займёт минуту.</span></li>
-        <li><b>Мы перезвоним</b><span>Администратор свяжется с вами в течение рабочего дня и пригласит на первое занятие.</span></li>
+        <li><b>Позвоните или напишите</b><span>Администратору центра по телефону, в MAX, Telegram или WhatsApp. Сообщение с названием занятия подготовим за вас.</span></li>
+        <li><b>Приходите на занятие</b><span>Администратор подскажет время первого занятия и что взять с собой.</span></li>
       </ol>
       <div class="steps__cta">
-        <button class="btn btn--red" data-signup>Оставить заявку</button>
+        <button class="btn btn--red" data-signup>Записаться</button>
         <a class="btn btn--outline" id="botLink" href="#" hidden target="_blank" rel="noopener">Записаться через Telegram</a>
       </div>
     </div>
@@ -168,7 +168,6 @@
     </p>
     <p class="foot__links foot__legal">
       <a href="privacy.html">Политика обработки персональных данных</a>
-      <a href="consent.html">Согласие на обработку данных</a>
     </p>
   </div>
 </footer>
@@ -184,7 +183,7 @@
   </div>
 </div>
 
-<!-- Форма записи -->
+<!-- Запись: звонок или мессенджеры -->
 <div class="sheet" id="sheet" hidden>
   <div class="sheet__veil" data-close></div>
   <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
@@ -192,86 +191,23 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
     </button>
 
-    <form class="form" id="form" novalidate>
-      <h2 class="form__title" id="sheet-title">Запись на занятие</h2>
-      <p class="form__sub">Администратор перезвонит в течение рабочего дня и пригласит на первое занятие.</p>
+    <div class="contact">
+      <h2 class="form__title" id="sheet-title">Записаться на занятие</h2>
+      <p class="form__sub">Позвоните или напишите администратору центра. Она ответит на вопросы и пригласит на первое занятие.</p>
 
       <label class="field">
         <span>Занятие</span>
-        <select name="club" id="fClub" required></select>
+        <select id="fClub"></select>
       </label>
 
-      <fieldset class="field field--seg">
-        <legend>Кто будет заниматься</legend>
-        <label><input type="radio" name="forWhom" value="Ребёнок" checked><span>Ребёнок</span></label>
-        <label><input type="radio" name="forWhom" value="Я сам(а)"><span>Я сам(а)</span></label>
-        <label><input type="radio" name="forWhom" value="Всей семьёй"><span>Всей семьёй</span></label>
-      </fieldset>
-
-      <div class="form__two">
-        <label class="field" id="studentField">
-          <span>Имя ученика</span>
-          <input name="student" autocomplete="off" maxlength="80" placeholder="Например, Варвара">
-        </label>
-        <label class="field">
-          <span>Возраст</span>
-          <input name="age" inputmode="numeric" maxlength="3" placeholder="лет">
-        </label>
-      </div>
-
-      <label class="field">
-        <span>Ваше имя</span>
-        <input name="name" autocomplete="name" required maxlength="80" placeholder="Как к вам обращаться">
-        <em class="field__err">Напишите, как к вам обращаться</em>
-      </label>
-
-      <label class="field">
-        <span>Телефон</span>
-        <input name="phone" type="tel" autocomplete="tel" required placeholder="+7 900 000-00-00">
-        <em class="field__err">Нужен номер из 10 цифр после +7</em>
-      </label>
-
-      <fieldset class="field field--seg">
-        <legend>Как с вами связаться</legend>
-        <label><input type="radio" name="contact" value="Звонок" checked><span>Звонок</span></label>
-        <label><input type="radio" name="contact" value="WhatsApp"><span>WhatsApp</span></label>
-        <label><input type="radio" name="contact" value="Telegram"><span>Telegram</span></label>
-      </fieldset>
-
-      <label class="field">
-        <span>Комментарий <i>необязательно</i></span>
-        <textarea name="comment" rows="2" maxlength="500" placeholder="Удобные дни, опыт, вопросы"></textarea>
-        <small class="field__hint">Не пишите здесь сведения о здоровье и другие личные подробности</small>
-      </label>
-
-      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-      <label class="check">
-        <input type="checkbox" name="consent" required>
-        <span>Даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a>, в том числе данных ребёнка, если записываю его как родитель или законный представитель</span>
-      </label>
-      <p class="form__legal">Подробнее: <a href="privacy.html" target="_blank" rel="noopener">Политика обработки персональных данных</a>. Согласие можно отозвать в любой момент.</p>
-      <em class="field__err field__err--check">Без согласия мы не сможем вам перезвонить</em>
-
-      <button class="btn btn--red btn--wide" type="submit" id="submit">Отправить заявку</button>
-      <p class="form__fail" id="fail" hidden></p>
-    </form>
-
-    <div class="done" id="done" hidden>
-      <svg class="done__mark" viewBox="0 0 120 120" aria-hidden="true">
-        <circle cx="60" cy="60" r="54"/>
-        <path d="M40 61l13 13 27-29"/>
-      </svg>
-      <h2 class="form__title">Заявка отправлена</h2>
-      <p class="form__sub" id="doneText"></p>
-      <a class="btn btn--red btn--wide" id="doneBot" hidden target="_blank" rel="noopener">Получать уведомления в Telegram</a>
-      <button class="btn btn--outline btn--wide" data-close>Вернуться к занятиям</button>
+      <div class="cbtns" id="sheetBtns"></div>
+      <p class="contact__note" id="contactNote"></p>
     </div>
   </div>
 </div>
 
-<script src="js/config.js?v=202611101200"></script>
-<script src="js/clubs.js?v=202611101200"></script>
-<script src="js/app.js?v=202611101200"></script>
+<script src="js/config.js?v=202611131930"></script>
+<script src="js/clubs.js?v=202611131930"></script>
+<script src="js/app.js?v=202611131930"></script>
 </body>
 </html>

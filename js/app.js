@@ -208,14 +208,12 @@
   $("#addr").textContent = CFG.address;
   $("#hours").textContent = CFG.hours;
   $("#admin").innerHTML = esc(CFG.adminName) + ', <a href="tel:+' + CFG.adminPhoneRaw + '">' + esc(CFG.adminPhone) + "</a>";
-  $("#links").innerHTML =
-    '<a class="btn btn--red btn--sm" href="https://wa.me/' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">WhatsApp</a>' +
-    '<a class="btn btn--outline btn--sm" href="https://t.me/+' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener">Telegram</a>' +
+  $("#links").innerHTML = contactButtons(null, true) +
     '<a class="btn btn--outline btn--sm" href="https://yandex.ru/maps/?text=' + encodeURIComponent("Химки, Сходня, Первомайская улица, 9") + '" target="_blank" rel="noopener">Построить маршрут</a>';
   if (CFG.botUsername) { var bl = $("#botLink"); bl.href = "https://t.me/" + CFG.botUsername + "?start=catalog"; bl.hidden = false; }
 
   /* ---------- Панели ---------- */
-  var info = $("#info"), sheet = $("#sheet"), form = $("#form"), done = $("#done"), sel = $("#fClub"), lastFocus = null;
+  var info = $("#info"), sheet = $("#sheet"), sel = $("#fClub"), lastFocus = null;
 
   function openPanel(p, focusEl) {
     if (!lastFocus) lastFocus = document.activeElement;
@@ -269,8 +267,8 @@
           "<div><dt>Ведёт</dt><dd>" + esc(c.teacher) + (c.teacherNote ? "<span>" + esc(c.teacherNote) + "</span>" : "") + "</dd></div>" +
           "<div><dt>Пожертвование</dt><dd>" + esc(c.price || "уточните у администратора") + "</dd></div>" +
         "</dl>" +
-        '<div class="info__act"><button class="btn btn--red btn--wide" data-signup="' + c.id + '">Записаться</button>' +
-          (c.phone ? '<a class="btn btn--outline btn--wide" href="tel:' + c.phone.replace(/[^\d+]/g, "") + '">Позвонить педагогу: ' + esc(c.phone) + "</a>" : "") +
+        '<div class="info__act"><p class="info__how">Записаться у администратора</p>' + contactButtons(c) +
+          (c.phone ? '<a class="btn btn--ghost btn--wide" href="tel:' + c.phone.replace(/[^\d+]/g, "") + '"><span>Позвонить педагогу: <span class="nw">' + esc(c.phone) + "</span></span></a>" : "") +
         "</div>" +
       "</div>";
     info.querySelector(".sheet__panel").scrollTop = 0;
@@ -299,13 +297,14 @@
   }
 
   function openSheet(id) {
-    form.hidden = false; done.hidden = true; done.classList.remove("is-on"); $("#fail").hidden = true;
     sel.value = id && byId[id] ? id : "";
+    renderSheet();
     if (!info.hidden) closePanel(info, true);
-    openPanel(sheet, function () { return sel.value ? form.elements.student : sel; });
+    openPanel(sheet, function () { return $("#sheetBtns a", sheet); });
   }
-
   document.addEventListener("click", function (e) {
+    var cp = e.target.closest("[data-copy]");
+    if (cp) copyText(cp.getAttribute("data-copy"));
     var s = e.target.closest("[data-signup]");
     if (s) { e.preventDefault(); openSheet(s.getAttribute("data-signup")); return; }
     var i = e.target.closest("[data-info]");
@@ -324,104 +323,49 @@
     }
   });
 
-  /* ---------- Форма записи ---------- */
+  /* ---------- Запись: звонок, MAX, Telegram, WhatsApp ---------- */
   sel.innerHTML = '<option value="">Помогите выбрать</option>' +
     Object.keys(CATS).map(function (k) {
       return '<optgroup label="' + CATS[k].name + '">' + CLUBS.filter(function (c) { return c.cat === k; }).map(function (c) {
         return '<option value="' + c.id + '">' + esc(fullTitle(c)) + "</option>";
       }).join("") + "</optgroup>";
     }).join("");
-
-  form.addEventListener("change", function (e) {
-    if (e.target.name !== "forWhom") return;
-    $("#studentField").style.display = e.target.value === "Я сам(а)" ? "none" : "";
-    $("#studentField span").textContent = e.target.value === "Всей семьёй" ? "Кто ещё придёт" : "Имя ученика";
-  });
-
-  var phone = form.elements.phone;
-  phone.addEventListener("input", function () {
-    var d = phone.value.replace(/\D/g, "");
-    if (d[0] === "8" || d[0] === "7") d = d.slice(1);
-    d = d.slice(0, 10);
-    var out = "+7";
-    if (d.length) out += " " + d.slice(0, 3);
-    if (d.length > 3) out += " " + d.slice(3, 6);
-    if (d.length > 6) out += "-" + d.slice(6, 8);
-    if (d.length > 8) out += "-" + d.slice(8, 10);
-    phone.value = out;
-  });
-  phone.addEventListener("focus", function () { if (!phone.value) phone.value = "+7 "; });
-
-  function validate() {
-    var nameF = form.elements.name.closest(".field");
-    var nm = form.elements.name.value.trim().length >= 2;
-    nameF.classList.toggle("is-bad", !nm);
-    var ph = phone.value.replace(/\D/g, "").length === 11;
-    phone.closest(".field").classList.toggle("is-bad", !ph);
-    var cs = form.elements.consent.checked;
-    $(".field__err--check").classList.toggle("is-on", !cs);
-    var ok = nm && ph && cs;
-    if (!ok) ($(".is-bad input", form) || form.elements.consent).focus();
-    return ok;
+  function renderSheet() {
+    $("#sheetBtns").innerHTML = contactButtons(byId[sel.value] || null);
+    $("#contactNote").textContent = "В WhatsApp сообщение с названием занятия подставится само. " +
+      (CFG.maxLink ? "В MAX и Telegram текст скопируется: вставьте его в чат." :
+        "В MAX текст тоже будет готов, выберите чат с администратором (" + CFG.adminPhone + "). В Telegram текст скопируется: вставьте его в чат.");
   }
+  sel.addEventListener("change", renderSheet);
 
-  function message(d) {
-    return "Здравствуйте! Хочу записаться в «Кинонию».\n" +
-      "Занятие: " + d.club + "\n" +
-      "Кто занимается: " + d.forWhom + (d.student ? ", " + d.student : "") + (d.age ? ", " + d.age + " лет" : "") + "\n" +
-      "Контакт: " + d.name + ", " + d.phone + " (" + d.contact + ")" +
-      (d.comment ? "\nКомментарий: " + d.comment : "") +
-      "\nСогласие на обработку персональных данных дано на сайте " + consentStamp();
+  // готовый текст для администратора
+  function signupText(c) {
+    return "Здравствуйте, " + CFG.adminName + "! Хочу записаться " +
+      (c ? "на занятие «" + fullTitle(c) + "» в центре «Кинония». Подскажите, пожалуйста, когда можно прийти на первое занятие?"
+         : "на занятие в центре «Кинония». Помогите, пожалуйста, выбрать.");
   }
-  // дата и время согласия — остаются в заявке как подтверждение
-  function consentStamp() {
-    var n = new Date(), p = function (x) { return (x < 10 ? "0" : "") + x; };
-    return p(n.getDate()) + "." + p(n.getMonth() + 1) + "." + n.getFullYear() + " " + p(n.getHours()) + ":" + p(n.getMinutes()) + " (версия согласия от 10.11.2026)";
+  // кнопки в порядке: звонок, MAX, Telegram, WhatsApp
+  function contactButtons(c, small) {
+    var t = signupText(c), enc = encodeURIComponent(t), sz = small ? " btn--sm" : " btn--wide";
+    var max = CFG.maxLink
+      ? '<a class="btn btn--outline cbtn cbtn--max' + sz + '" href="' + esc(CFG.maxLink) + '" target="_blank" rel="noopener" data-copy="' + esc(t) + '"><i class="cdot"></i>MAX</a>'
+      : '<a class="btn btn--outline cbtn cbtn--max' + sz + '" href="https://max.ru/:share?text=' + enc + '" target="_blank" rel="noopener"><i class="cdot"></i>MAX</a>';
+    return (small ? "" : '<a class="btn btn--red cbtn cbtn--tel' + sz + '" href="tel:+' + CFG.adminPhoneRaw + '">Позвонить: ' + esc(CFG.adminPhone) + "</a>") +
+      '<div class="cbtns__row' + (small ? " cbtns__row--inline" : "") + '">' + max +
+      '<a class="btn btn--outline cbtn cbtn--tg' + sz + '" href="https://t.me/+' + CFG.adminPhoneRaw + '" target="_blank" rel="noopener" data-copy="' + esc(t) + '"><i class="cdot"></i>Telegram</a>' +
+      '<a class="btn btn--outline cbtn cbtn--wa' + sz + '" href="https://wa.me/' + CFG.adminPhoneRaw + "?text=" + enc + '" target="_blank" rel="noopener"><i class="cdot"></i>WhatsApp</a></div>';
   }
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (form.elements.website.value) return;
-    if (!validate()) return;
-    var c = byId[sel.value];
-    var data = {
-      source: "site", clubId: sel.value || "", club: c ? fullTitle(c) : "Помочь с выбором",
-      forWhom: form.elements.forWhom.value, student: form.elements.student.value.trim(),
-      age: form.elements.age.value.trim(), name: form.elements.name.value.trim(),
-      phone: phone.value, contact: form.elements.contact.value, comment: form.elements.comment.value.trim()
+  // Telegram (и MAX по ссылке на профиль) не умеют подставлять текст — копируем его
+  var toastT = 0;
+  function copyText(t) {
+    var ok = function () {
+      var el = $("#toast");
+      if (!el) { el = document.createElement("div"); el.id = "toast"; el.className = "toast"; el.setAttribute("role", "status"); document.body.appendChild(el); }
+      el.textContent = "Текст сообщения скопирован — вставьте его в чат";
+      el.classList.add("is-on"); clearTimeout(toastT);
+      toastT = setTimeout(function () { el.classList.remove("is-on"); }, 3500);
     };
-    var btn = $("#submit");
-    btn.disabled = true; btn.textContent = "Отправляем…";
-
-    if (!CFG.endpoint) { // запасной путь, пока сервер не подключён
-      btn.disabled = false; btn.textContent = "Отправить заявку";
-      window.open("https://wa.me/" + CFG.adminPhoneRaw + "?text=" + encodeURIComponent(message(data)), "_blank", "noopener");
-      showDone(data, null, true);
-      return;
-    }
-
-    fetch(CFG.endpoint, { method: "POST", body: JSON.stringify(data) })
-      .then(function (r) { return r.json(); })
-      .then(function (res) { if (!res.ok) throw new Error(res.error || "fail"); showDone(data, res.id, false); })
-      .catch(function () {
-        var f = $("#fail");
-        f.hidden = false;
-        f.innerHTML = 'Заявка не отправилась: нет связи с сервером. Проверьте интернет и нажмите ещё раз или <a href="https://wa.me/' + CFG.adminPhoneRaw + "?text=" + encodeURIComponent(message(data)) + '" target="_blank" rel="noopener">отправьте её в WhatsApp</a>.';
-      })
-      .finally(function () { btn.disabled = false; btn.textContent = "Отправить заявку"; });
-  });
-
-  function showDone(d, id, viaWa) {
-    form.hidden = true; done.hidden = false;
-    requestAnimationFrame(function () { done.classList.add("is-on"); });
-    $("#doneText").textContent = viaWa
-      ? "Мы открыли WhatsApp с готовым сообщением для администратора. Отправьте его, и " + CFG.adminName + " перезвонит вам по номеру " + d.phone + "."
-      : CFG.adminName + " перезвонит вам по номеру " + d.phone + " в течение рабочего дня. Занятие: " + d.club + ".";
-    var db = $("#doneBot");
-    if (CFG.botUsername && id) { db.href = "https://t.me/" + CFG.botUsername + "?start=r" + id; db.hidden = false; }
-    else db.hidden = true;
-    form.reset(); $("#studentField").style.display = "";
-    $(".done .btn--outline").focus({ preventScroll: true });
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, function () {});
   }
 
   // #zapis=icon открывает запись, #kruzhok=icon — карточку занятия
